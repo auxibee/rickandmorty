@@ -1,7 +1,47 @@
-.button{
-    text-decoration: none;
+.button {
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
 }
 
-.primary{
-    background: gray;
+.active {
+  color: var(--bs-blue);
+  padding: 15px 5px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 3px solid var(--bs-blue);
+}
+
+.notactive {
+  color: var(--bs-gray-600);
+  padding: 15px 5px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.notactive :hover {
+  color: var(--bs-gray-800);
+}
+
+.primary {
+  border-radius: 5px;
+  padding: 5px 15px;
+  font-weight: 500;
+  background: var(--bs-blue);
+  color: var(--bs-light);
+}
+
+.alive {
+  background: var(--bs-success);
+}
+
+.dead {
+  background: var(--bs-danger);
+}
+
+.unknown {
+  background: var(--bs-gray-600);
 }
