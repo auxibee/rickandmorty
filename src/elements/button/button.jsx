@@ -1,5 +1,6 @@
 import styles from "./button.module.css";
 import cn from "classnames";
+import { Link } from "react-router-dom";
 
 const BaseButton = ({ children, ...rest }) => {
   return (
@@ -11,9 +12,9 @@ const BaseButton = ({ children, ...rest }) => {
 
 const LinkButton = ({ href, children, ...rest }) => {
   return (
-    <a href={href} {...rest}>
+    <Link to={href} {...rest}>
       {children}
-    </a>
+    </Link>
   );
 };
 

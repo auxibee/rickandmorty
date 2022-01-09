@@ -1,0 +1,63 @@
+.main {
+  display: grid;
+  gap: 1em;
+  grid-template-rows: auto auto 1fr;
+  min-height: 100vh;
+  grid-template-areas:
+    "hero"
+    "aside"
+    "content";
+}
+
+section {
+  grid-area: hero;
+}
+aside {
+  grid-area: aside;
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 5px;
+}
+
+@media (min-width: 40em) {
+  .main {
+    grid-template-columns: 15em 1fr;
+    grid-template-areas:
+      "hero hero "
+      "aside content";
+  }
+}
+
+.main h1 {
+  font-size: 38px;
+  font-weight: 600;
+  margin: 10px 0 10px 0;
+}
+
+.main h3 {
+  font-weight: 500;
+}
+
+.main span {
+  color: var(--bs-blue);
+}
+
+.main select {
+  margin: 10px 0 10px 0;
+}
+
+/* 
+Characters
+*/
+
+.heroSub input {
+  margin-right: 10px;
+}
+
+.heroSub button {
+  padding: 10px 15px 10px 15px;
+}

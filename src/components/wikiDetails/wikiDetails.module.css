@@ -1,0 +1,18 @@
+.wikiDetails img {
+  max-width: 100%;
+}
+
+.wikiDetails button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.wikiDetails h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.wikiDetails p {
+  font-size: 20px;
+}

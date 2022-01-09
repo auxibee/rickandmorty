@@ -4,7 +4,9 @@ const SelectInput = ({ name, options }) => {
   return (
     <select name={name} id={name} className={styles.selectInput}>
       {options.map((option) => (
-        <option value={option}> {option} </option>
+        <option key={option} value={option}>
+          {option}
+        </option>
       ))}
     </select>
   );

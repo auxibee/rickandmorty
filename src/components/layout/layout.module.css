@@ -1,0 +1,28 @@
+.layout {
+  display: grid;
+  gap: 1em;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  max-width: 960px;
+  margin: 0 auto;
+  grid-template-areas:
+    "header"
+    "main";
+}
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+}
+
+@media (min-width: 40em) {
+  .layout {
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header "
+      "main";
+  }
+}
