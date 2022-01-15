@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const baseURL = "https://rickandmortyapi.com/api/"
 
-const fetchAxios = axios.create({baseURL})
+export const fetchAxios = axios.create({baseURL})
 
 export const getCharacter = async () => {
     await fetchAxios.get("character")
