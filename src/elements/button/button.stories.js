@@ -13,8 +13,8 @@ export  const NonActiveLink = () => <Button href="#" notactive> Normal Link </Bu
 
 export const PrimaryButton = () => <Button primary> Search </Button>
 
-export const AliveButton = () => <Button primary alive> Alive </Button>
+export const AliveButton = () => <Button primary status="alive"> Alive </Button>
 
-export const DeadButton = () => <Button primary dead> Dead </Button>
+export const DeadButton = () => <Button primary status="dead"> Dead </Button>
 
-export const UnknownButton = () => <Button primary unknown> Unknown </Button>
+export const UnknownButton = () => <Button primary status="unknown"> Unknown </Button>

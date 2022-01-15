@@ -18,16 +18,7 @@ const LinkButton = ({ href, children, ...rest }) => {
   );
 };
 
-const Button = ({
-  children,
-  active,
-  notactive,
-  primary,
-  alive,
-  dead,
-  unknown,
-  ...rest
-}) => {
+const Button = ({ children, active, notactive, primary, status, ...rest }) => {
   const HocButton = rest.href ? LinkButton : BaseButton;
   return (
     <HocButton
@@ -36,9 +27,9 @@ const Button = ({
         active && styles.active,
         notactive && styles.notactive,
         primary && styles.primary,
-        alive && styles.alive,
-        dead && styles.dead,
-        unknown && styles.unknown
+        status == "alive" && styles.alive,
+        status == "dead" && styles.dead,
+        status == "unknown" && styles.unknown
       )}
       {...rest}
     >
