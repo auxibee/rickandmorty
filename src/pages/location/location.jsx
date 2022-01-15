@@ -1,49 +1,69 @@
 import Hero from "components/hero/hero";
-import WikiDetails from "components/wikiDetails/wikiDetails";
+import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "../styles.module.css";
-import { getLocation } from "./../api";
-
-const sample = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-];
-
-const options = ["Choose....", "episode-1", "espisode-2", "episode-3"];
+import { fetchAxios } from "./../api";
 
 const Location = () => {
+  const [currentWiki, setCurrentWiki] = useState(1);
+  const [wikiInfo, setWikiInfo] = useState({});
+  const { dimension, type, name } = wikiInfo;
+  const [residence, setResidence] = useState([]);
+
+  const count = 126;
+
+  const handleChange = (event) => {
+    setCurrentWiki(event.target.value);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await getLocation();
+        const response = await fetchAxios(
+          `https://rickandmortyapi.com/api/location/${currentWiki}`
+        );
+
+        const { data } = response;
+
+        setWikiInfo(data);
+
+        const dt = await Promise.all(
+          data.residents.map(async (resident) => {
+            const response = await fetchAxios(resident);
+
+            const { data } = response;
+
+            return data;
+          })
+        );
+
+        setResidence(dt);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [currentWiki]);
+
   return (
     <div className={styles.main}>
       <section>
         <Hero>
           <h1>
-            Location: <span>Earth(c-12)</span>
+            Location: <span>{name}</span>
           </h1>
-          <h3>Dimension: Dimension c-12</h3>
-          <h2>Type: Planet</h2>
+          <h3>Dimension: {dimension}</h3>
+          <h2>Type: {type}</h2>
         </Hero>
       </section>
       <aside>
         <h3>Pick an Episode:</h3>
-        <SelectInput name="location" options={options} />
+        <SelectInput name="Location" options={count} onChange={handleChange} />
       </aside>
-      <div className={styles.content}>
-        {sample.map((wiki) => (
-          <WikiDetails />
-        ))}
-      </div>
+      <div className={styles.content}>{<WikiList results={residence} />}</div>
     </div>
   );
 };
