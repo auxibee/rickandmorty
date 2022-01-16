@@ -1,0 +1,11 @@
+.pagination {
+  margin: 20px 0 20px 0;
+}
+
+.pagination span {
+  padding: 0 5px 0 5px;
+}
+
+.pagination button:disabled {
+  background: var(--bs-light-blue);
+}

@@ -1,0 +1,7 @@
+.accordion {
+  width: 200px;
+  border: 1px solid rebeccapurple;
+}
+.accordion h3 {
+  cursor: pointer;
+}
