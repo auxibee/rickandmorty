@@ -4,6 +4,7 @@ import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
 import { fetchAxios } from "./../api";
 import styles from "../styles.module.css";
+import Head from "components/head/head";
 
 const Episodes = () => {
   const [currentWiki, setCurrentWiki] = useState(1);
@@ -46,21 +47,26 @@ const Episodes = () => {
     fetchData();
   }, [currentWiki]);
   return (
-    <div className={styles.main}>
-      <section>
-        <Hero>
-          <h1>
-            Episode name: <span>{name}</span>
-          </h1>
-          <h3>Air Date: {air_date}</h3>
-        </Hero>
-      </section>
-      <aside>
-        <h3>Pick an Episode:</h3>
-        <SelectInput name="Episode" options={count} onChange={handleChange} />
-      </aside>
-      <div className={styles.content}>{<WikiList results={characters} />}</div>
-    </div>
+    <>
+      <Head title="Rick and Morty | Episodes" />
+      <div className={styles.main}>
+        <section>
+          <Hero>
+            <h1>
+              Episode name: <span>{name}</span>
+            </h1>
+            <h3>Air Date: {air_date}</h3>
+          </Hero>
+        </section>
+        <aside>
+          <h3>Pick an Episode:</h3>
+          <SelectInput name="Episode" options={count} onChange={handleChange} />
+        </aside>
+        <div className={styles.content}>
+          {<WikiList results={characters} />}
+        </div>
+      </div>
+    </>
   );
 };
 

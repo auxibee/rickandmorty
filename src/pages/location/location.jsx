@@ -2,7 +2,7 @@ import Hero from "components/hero/hero";
 import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
 import { useEffect, useState } from "react";
-
+import Head from "components/head/head";
 import styles from "../styles.module.css";
 import { fetchAxios } from "./../api";
 
@@ -49,22 +49,29 @@ const Location = () => {
   }, [currentWiki]);
 
   return (
-    <div className={styles.main}>
-      <section>
-        <Hero>
-          <h1>
-            Location: <span>{name}</span>
-          </h1>
-          <h3>Dimension: {dimension}</h3>
-          <h2>Type: {type}</h2>
-        </Hero>
-      </section>
-      <aside>
-        <h3>Pick an Episode:</h3>
-        <SelectInput name="Location" options={count} onChange={handleChange} />
-      </aside>
-      <div className={styles.content}>{<WikiList results={residence} />}</div>
-    </div>
+    <>
+      <Head title="Rick and Morty | Location" />
+      <div className={styles.main}>
+        <section>
+          <Hero>
+            <h1>
+              Location: <span>{name}</span>
+            </h1>
+            <h3>Dimension: {dimension}</h3>
+            <h2>Type: {type}</h2>
+          </Hero>
+        </section>
+        <aside>
+          <h3>Pick an Episode:</h3>
+          <SelectInput
+            name="Location"
+            options={count}
+            onChange={handleChange}
+          />
+        </aside>
+        <div className={styles.content}>{<WikiList results={residence} />}</div>
+      </div>
+    </>
   );
 };
 

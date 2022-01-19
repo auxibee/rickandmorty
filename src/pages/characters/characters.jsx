@@ -10,6 +10,7 @@ import styles from "../styles.module.css";
 import Accordion from "components/accordion/accordion";
 import usePagination from "components/pagination/usePagination";
 import Pagination from "components/pagination/pagination";
+import Head from "components/head/head";
 
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
@@ -52,7 +53,6 @@ const Characters = () => {
         "Disease",
         "Robot",
         "Cronenberg",
-        "Planet",
       ],
     },
     { title: "Gender", buttons: ["female", "male", "genderless", "unknown"] },
@@ -90,34 +90,39 @@ const Characters = () => {
   }, [filter, currentPage]);
 
   return (
-    <div className={styles.main}>
-      <section>
-        <Hero>
-          <h1>Characters</h1>
-          <div className={styles.heroSub}>
-            <SearchInput />
-            <Button primary>Search</Button>
-          </div>
-        </Hero>
-      </section>
-      <aside>
-        <h3>Filters</h3>
-        <Accordion items={filterItems} onFilter={handleFilter} />
-      </aside>
-      <div className={styles.content}>{<WikiList results={characters} />}</div>
-      <footer>
-        {currPage && (
-          <Pagination
-            currentPage={currentPage}
-            lastPage={lastPage}
-            onPageNext={handlePageNext}
-            onPagePrevious={handlePagePrev}
-            nextBtnState={btnNext}
-            prevBtnState={btnPrevious}
-          />
-        )}
-      </footer>
-    </div>
+    <>
+      <Head title="Rick and Morty | Characters" />
+      <div className={styles.main}>
+        <section>
+          <Hero>
+            <h1>Characters</h1>
+            <div className={styles.heroSub}>
+              <SearchInput />
+              <Button primary>Search</Button>
+            </div>
+          </Hero>
+        </section>
+        <aside>
+          <h3>Filters</h3>
+          <Accordion items={filterItems} onFilter={handleFilter} />
+        </aside>
+        <div className={styles.content}>
+          {<WikiList results={characters} />}
+        </div>
+        <footer>
+          {currPage && (
+            <Pagination
+              currentPage={currentPage}
+              lastPage={lastPage}
+              onPageNext={handlePageNext}
+              onPagePrevious={handlePagePrev}
+              nextBtnState={btnNext}
+              prevBtnState={btnPrevious}
+            />
+          )}
+        </footer>
+      </div>
+    </>
   );
 };
 
