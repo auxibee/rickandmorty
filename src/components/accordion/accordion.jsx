@@ -10,9 +10,9 @@ const AccordionItem = ({ title, buttons, onFilter }) => {
   return (
     <div className={styles.accordion}>
       <h3 onClick={handleToggle}>{title}</h3>
-      <span>{isActive ? "+" : "-"}</span>
+
       {isActive && (
-        <div>
+        <div className={styles.filters}>
           {buttons.map((button) => (
             <Button
               key={button}
