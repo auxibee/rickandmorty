@@ -9,7 +9,7 @@ export default {
 
 export  const ActiveLink = () => <Button href="#" active> Active Link </Button>
 
-export  const NonActiveLink = () => <Button href="#" notactive> Normal Link </Button>
+export  const NavLink = () => <Button href="#" navLink> Normal Link </Button>
 
 export const PrimaryButton = () => <Button primary> Search </Button>
 

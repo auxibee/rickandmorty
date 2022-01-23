@@ -18,14 +18,14 @@ const LinkButton = ({ href, children, ...rest }) => {
   );
 };
 
-const Button = ({ children, active, notactive, primary, status, ...rest }) => {
+const Button = ({ children, active, navLink, primary, status, ...rest }) => {
   const HocButton = rest.href ? LinkButton : BaseButton;
   return (
     <HocButton
       className={cn(
         styles.button,
         active && styles.active,
-        notactive && styles.notactive,
+        navLink && styles.navLink,
         primary && styles.primary,
         status == "alive" && styles.alive,
         status == "dead" && styles.dead,
