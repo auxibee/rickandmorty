@@ -1,5 +1,12 @@
+.wikiDetails {
+  margin: 5px;
+}
 .wikiDetails img {
   max-width: 100%;
+}
+
+.wikiDetails a {
+  text-decoration: none;
 }
 
 .wikiDetails button {
@@ -8,7 +15,7 @@
   right: 5px;
 }
 
-.wikiDetails h1 {
+.wikiName {
   font-size: 24px;
   font-weight: 700;
 }
