@@ -28,7 +28,6 @@ const WikiDetails = ({ name, id, status, location, image }) => {
           </Button>
           <img src={image} alt="image" />
           <div className={styles.wikiName}>{name}</div>
-          <div>hello</div>
           <h3> Last Location </h3>
           <p>{location}</p>
         </Card>
