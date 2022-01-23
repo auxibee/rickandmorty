@@ -1,0 +1,19 @@
+.wikiCard {
+  width: 300px;
+  margin: 20px auto;
+}
+
+.wikiCard h1 {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--bs-gray-dark);
+}
+.wikiCard p {
+  font-weight: 600;
+  padding: 5px 5px;
+}
+
+.wikiCard span {
+  font-weight: 400;
+}
