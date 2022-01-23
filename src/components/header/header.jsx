@@ -2,20 +2,22 @@ import styles from "./header.module.css";
 import Logo from "elements/logo/logo";
 import Button from "elements/button/button";
 
-const Header = () => {
+const Header = ({ buttons, selected, setSelected }) => {
   return (
     <div className={styles.header}>
       <Logo />
       <nav>
-        <Button href="/" active>
-          Characters
-        </Button>
-        <Button href="episodes" notactive>
-          Episodes
-        </Button>
-        <Button href="location" notactive>
-          Location
-        </Button>
+        {buttons.map((button) => (
+          <Button
+            key={button}
+            href={button == "characters" ? "/" : button}
+            active={selected == button ? true : false}
+            onClick={() => setSelected(button)}
+            navLink
+          >
+            {button}
+          </Button>
+        ))}
       </nav>
     </div>
   );

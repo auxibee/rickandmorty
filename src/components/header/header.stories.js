@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import Header from './header';
 
 export default {
@@ -7,4 +7,14 @@ export default {
 }
 
 
-export const LayoutHeader = () => <Header />
+export const LayoutHeader = () => {
+    const [selected, setSelected] = useState("characters");
+
+    return (
+        <Header
+          buttons={["characters", "location", "episodes"]}
+          selected={selected}
+          setSelected={setSelected}
+        />
+    )
+}
