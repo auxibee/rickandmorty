@@ -15,9 +15,11 @@ import Head from "components/head/head";
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const [filter, setFilter] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [totalCount, setTotalCount] = useState(0);
   let [currentPage, setCurrentPage] = useState(1);
 
-  const totalCount = 826;
   const pageSize = 20;
 
   const [firstPage, currPage, lastPage] = usePagination({
@@ -36,6 +38,10 @@ const Characters = () => {
 
   const handlePagePrev = () => {
     setCurrentPage(currentPage - 1);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
   };
 
   const filterItems = [
@@ -65,10 +71,11 @@ const Characters = () => {
     const fetchData = async () => {
       try {
         const response = await fetchAxios(
-          `https://rickandmortyapi.com/api/character/?page=${currentPage}&${filter}`
+          `https://rickandmortyapi.com/api/character/?page=${currentPage}&${filter}&name=${searchTerm}`
         );
 
         const { data } = response;
+        const { info } = data;
 
         const dt = await Promise.all(
           data.results.map(async (resident) => {
@@ -81,13 +88,14 @@ const Characters = () => {
         );
 
         setCharacters(dt);
+        setTotalCount(info.count);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [filter, currentPage]);
+  }, [filter, currentPage, searchTerm]);
 
   return (
     <>
@@ -97,13 +105,18 @@ const Characters = () => {
           <Hero>
             <h1>Characters</h1>
             <div className={styles.heroSub}>
-              <SearchInput />
-              <Button primary>Search</Button>
+              <SearchInput
+                value={inputValue}
+                onInputChange={handleInputChange}
+              />
+              <Button primary onClick={() => setSearchTerm(inputValue)}>
+                Search
+              </Button>
             </div>
           </Hero>
         </section>
         <aside>
-          <h3>Filters</h3>
+          <h3 className={styles.filterBy}>Filter By</h3>
           <Accordion items={filterItems} onFilter={handleFilter} />
         </aside>
         <div className={styles.content}>
