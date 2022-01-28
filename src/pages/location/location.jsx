@@ -13,8 +13,6 @@ const Location = () => {
     `https://rickandmortyapi.com/api/location/${currentWiki}`
   );
 
-  console.log(wiki.info);
-
   const count = 126;
 
   const handleChange = (event) => {

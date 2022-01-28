@@ -23,8 +23,6 @@ const Characters = () => {
     `https://rickandmortyapi.com/api/character/?page=${currentPage}&${filter}&name=${searchTerm}`
   );
 
-  console.log(currentPage, filter, searchTerm);
-
   const pageSize = 20;
 
   const [firstPage, currPage, lastPage] = usePagination({
