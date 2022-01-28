@@ -11,19 +11,24 @@ import Accordion from "components/accordion/accordion";
 import usePagination from "components/pagination/usePagination";
 import Pagination from "components/pagination/pagination";
 import Head from "components/head/head";
+import useFetch from "hooks/useFetch";
 
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
   const [filter, setFilter] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [totalCount, setTotalCount] = useState(0);
-  let [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { wiki } = useFetch(
+    `https://rickandmortyapi.com/api/character/?page=${currentPage}&${filter}&name=${searchTerm}`
+  );
+
+  console.log(currentPage, filter, searchTerm);
 
   const pageSize = 20;
 
   const [firstPage, currPage, lastPage] = usePagination({
-    totalCount,
+    totalCount: wiki.count ? wiki.count : 10,
     pageSize,
     currentPage,
   });
@@ -66,36 +71,9 @@ const Characters = () => {
 
   const handleFilter = (event) => {
     setFilter(event.target.value.toLowerCase());
+    // reset currentPage to 1
+    setCurrentPage(1);
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchAxios(
-          `https://rickandmortyapi.com/api/character/?page=${currentPage}&${filter}&name=${searchTerm}`
-        );
-
-        const { data } = response;
-        const { info } = data;
-
-        const dt = await Promise.all(
-          data.results.map(async (resident) => {
-            const response = await fetchAxios(resident);
-
-            const { data } = response;
-
-            return data;
-          })
-        );
-
-        setCharacters(dt);
-        setTotalCount(info.count);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [filter, currentPage, searchTerm]);
 
   return (
     <>
@@ -120,7 +98,11 @@ const Characters = () => {
           <Accordion items={filterItems} onFilter={handleFilter} />
         </aside>
         <div className={styles.content}>
-          {<WikiList results={characters} />}
+          {wiki.characters ? (
+            <WikiList results={wiki.characters} />
+          ) : (
+            <p>loading</p>
+          )}
         </div>
         <footer>
           {currPage && (

@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Hero from "components/hero/hero";
 import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
-import { fetchAxios } from "./../api";
+
 import styles from "../styles.module.css";
 import Head from "components/head/head";
+import useFetch from "hooks/useFetch";
 
 const Episodes = () => {
   const [currentWiki, setCurrentWiki] = useState(1);
-  const [wikiInfo, setWikiInfo] = useState({});
-  const { name, air_date } = wikiInfo;
-  const [characters, setCharacters] = useState([]);
+
+  const { wiki } = useFetch(
+    `https://rickandmortyapi.com/api/episode/${currentWiki}`
+  );
 
   const count = 51;
 
@@ -18,34 +20,6 @@ const Episodes = () => {
     setCurrentWiki(event.target.value);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchAxios(
-          `https://rickandmortyapi.com/api/episode/${currentWiki}`
-        );
-
-        const { data } = response;
-
-        setWikiInfo(data);
-        const dt = await Promise.all(
-          data.characters.map(async (resident) => {
-            const response = await fetchAxios(resident);
-
-            const { data } = response;
-
-            return data;
-          })
-        );
-
-        setCharacters(dt);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [currentWiki]);
   return (
     <>
       <Head title="Rick and Morty | Episodes" />
@@ -53,9 +27,9 @@ const Episodes = () => {
         <section>
           <Hero>
             <h1>
-              Episode name: <span>{name}</span>
+              Episode name: <span>{wiki.info ? wiki.info.name : null}</span>
             </h1>
-            <h3>Air Date: {air_date}</h3>
+            <h3>Air Date: {wiki.info ? wiki.info.air_date : null}</h3>
           </Hero>
         </section>
         <aside>
@@ -63,7 +37,11 @@ const Episodes = () => {
           <SelectInput name="Episode" options={count} onChange={handleChange} />
         </aside>
         <div className={styles.content}>
-          {<WikiList results={characters} />}
+          {wiki.characters ? (
+            <WikiList results={wiki.characters} />
+          ) : (
+            <p>loading ....</p>
+          )}
         </div>
       </div>
     </>

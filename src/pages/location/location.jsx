@@ -1,52 +1,25 @@
 import Hero from "components/hero/hero";
 import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "components/head/head";
 import styles from "../styles.module.css";
-import { fetchAxios } from "./../api";
+
+import useFetch from "hooks/useFetch";
 
 const Location = () => {
   const [currentWiki, setCurrentWiki] = useState(1);
-  const [wikiInfo, setWikiInfo] = useState({});
-  const { dimension, type, name } = wikiInfo;
-  const [residence, setResidence] = useState([]);
+  const { wiki } = useFetch(
+    `https://rickandmortyapi.com/api/location/${currentWiki}`
+  );
+
+  console.log(wiki.info);
 
   const count = 126;
 
   const handleChange = (event) => {
     setCurrentWiki(event.target.value);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchAxios(
-          `https://rickandmortyapi.com/api/location/${currentWiki}`
-        );
-
-        const { data } = response;
-
-        setWikiInfo(data);
-
-        const dt = await Promise.all(
-          data.residents.map(async (resident) => {
-            const response = await fetchAxios(resident);
-
-            const { data } = response;
-
-            return data;
-          })
-        );
-
-        setResidence(dt);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [currentWiki]);
 
   return (
     <>
@@ -55,10 +28,10 @@ const Location = () => {
         <section>
           <Hero>
             <h1>
-              Location: <span>{name}</span>
+              Location: <span>{wiki.info ? wiki.info.name : null}</span>
             </h1>
-            <h3>Dimension: {dimension}</h3>
-            <h2>Type: {type}</h2>
+            <h3>Dimension: {wiki.info ? wiki.info.dimension : null}</h3>
+            <h2>Type: {wiki.info ? wiki.info.type : null}</h2>
           </Hero>
         </section>
         <aside>
@@ -69,7 +42,13 @@ const Location = () => {
             onChange={handleChange}
           />
         </aside>
-        <div className={styles.content}>{<WikiList results={residence} />}</div>
+        <div className={styles.content}>
+          {wiki.characters ? (
+            <WikiList results={wiki.characters} />
+          ) : (
+            <p>loading </p>
+          )}
+        </div>
       </div>
     </>
   );
