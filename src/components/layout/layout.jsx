@@ -2,6 +2,7 @@ import Header from "components/header/header";
 
 import styles from "./layout.module.css";
 import { useState } from "react";
+import Main from "./main/main";
 
 const Layout = ({ children }) => {
   const [selected, setSelected] = useState("characters");
@@ -14,7 +15,7 @@ const Layout = ({ children }) => {
           setSelected={setSelected}
         />
       </header>
-      <main>{children}</main>
+      <Main>{children}</Main>
     </div>
   );
 };

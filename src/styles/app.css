@@ -4,3 +4,16 @@
 body {
   font-family: var(--bs-body-font-family);
 }
+
+.loading {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading svg {
+  height: 40px;
+  width: 40px;
+}
+

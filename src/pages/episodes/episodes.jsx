@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Hero from "components/hero/hero";
-import WikiList from "components/wikiDetails/wikiDetails";
 import SelectInput from "elements/input/selectInput";
 
-import styles from "../styles.module.css";
 import Head from "components/head/head";
 import useFetch from "hooks/useFetch";
+import MainContent from "components/maincontent/maincontent";
+import Sidebar from "components/sidebar/sidebar";
+import WikiDetails from "components/wikiDetails/wikiDetails";
+import WikiList from "./../../components/wikiDetails/wikiList";
+import SvgSpinner from "elements/logo/Spinner";
 
 const Episodes = () => {
   const [currentWiki, setCurrentWiki] = useState(1);
@@ -23,27 +26,39 @@ const Episodes = () => {
   return (
     <>
       <Head title="Rick and Morty | Episodes" />
-      <div className={styles.main}>
-        <section>
-          <Hero>
-            <h1>
-              Episode name: <span>{wiki.info ? wiki.info.name : null}</span>
-            </h1>
-            <h3>Air Date: {wiki.info ? wiki.info.air_date : null}</h3>
-          </Hero>
-        </section>
-        <aside>
-          <h3>Pick an Episode:</h3>
-          <SelectInput name="Episode" options={count} onChange={handleChange} />
-        </aside>
-        <div className={styles.content}>
-          {wiki.characters ? (
-            <WikiList results={wiki.characters} />
-          ) : (
-            <p>loading ....</p>
-          )}
-        </div>
-      </div>
+
+      <Hero
+        episode_name={wiki.info?.name}
+        air_date={wiki.info ? wiki.info.air_date : null}
+      />
+      <MainContent>
+        <Sidebar>
+          <h3>Filter</h3>
+          <SelectInput
+            name={"Episode"}
+            onChange={handleChange}
+            options={count}
+          />
+        </Sidebar>
+        {!wiki.characters && (
+          <div className="loading">
+            <SvgSpinner />
+          </div>
+        )}
+
+        <WikiList>
+          {wiki.characters?.map(({ name, id, status, location, image }) => (
+            <WikiDetails
+              key={id}
+              name={name}
+              id={id}
+              status={status}
+              location={location}
+              image={image}
+            />
+          ))}
+        </WikiList>
+      </MainContent>
     </>
   );
 };

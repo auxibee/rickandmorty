@@ -29,7 +29,26 @@ const AccordionItem = ({ title, buttons, onFilter }) => {
   );
 };
 
-const Accordion = ({ items, onFilter }) => {
+const Accordion = ({ onFilter }) => {
+  const items = [
+    { title: "Status", buttons: ["alive", "dead", "unknown"] },
+    {
+      title: "Species",
+      buttons: [
+        "Human",
+        "Alien",
+        "Humanoid",
+        "Poopybutthole",
+        "Mythological",
+        "Unknown",
+        "Animal",
+        "Disease",
+        "Robot",
+        "Cronenberg",
+      ],
+    },
+    { title: "Gender", buttons: ["female", "male", "genderless", "unknown"] },
+  ];
   return (
     <div>
       {items.map(({ title, buttons }) => (

@@ -4,21 +4,23 @@ import Button from "elements/button/button";
 
 const Header = ({ buttons, selected, setSelected }) => {
   return (
-    <div className={styles.header}>
-      <Logo />
-      <nav>
-        {buttons.map((button) => (
-          <Button
-            key={button}
-            href={button == "characters" ? "/" : button}
-            active={selected == button ? true : false}
-            onClick={() => setSelected(button)}
-            navLink
-          >
-            {button}
-          </Button>
-        ))}
-      </nav>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <Logo />
+        <nav>
+          {buttons.map((button) => (
+            <Button
+              key={button}
+              href={button == "characters" ? "/" : button}
+              active={selected == button ? true : false}
+              onClick={() => setSelected(button)}
+              navLink
+            >
+              {button}
+            </Button>
+          ))}
+        </nav>
+      </div>
     </div>
   );
 };

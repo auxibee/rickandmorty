@@ -3,3 +3,18 @@
   flex-direction: column;
   text-align: center;
 }
+
+.name {
+  color: var(--bs-blue);
+}
+
+
+.key{
+  font-size: 38px;
+  font-weight: 600;
+  margin: 10px 0 10px 0;
+}
+
+.sub{
+  font-weight: 500;
+}

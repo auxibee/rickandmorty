@@ -1,17 +1,15 @@
 import Hero from "components/hero/hero";
-import WikiList from "components/wikiDetails/wikiDetails";
-import Button from "elements/button/button";
-import SearchInput from "elements/input/input";
-import { useEffect, useState } from "react";
-
-import { fetchAxios } from "./../api";
-
-import styles from "../styles.module.css";
+import { useState } from "react";
 import Accordion from "components/accordion/accordion";
 import usePagination from "components/pagination/usePagination";
 import Pagination from "components/pagination/pagination";
 import Head from "components/head/head";
 import useFetch from "hooks/useFetch";
+import WikiDetails from "components/wikiDetails/wikiDetails";
+import MainContent from "components/maincontent/maincontent";
+import Sidebar from "components/sidebar/sidebar";
+import WikiList from "components/wikiDetails/wikiList";
+import SvgSpinner from "elements/logo/Spinner";
 
 const Characters = () => {
   const [filter, setFilter] = useState("");
@@ -47,26 +45,6 @@ const Characters = () => {
     setInputValue(event.target.value);
   };
 
-  const filterItems = [
-    { title: "Status", buttons: ["alive", "dead", "unknown"] },
-    {
-      title: "Species",
-      buttons: [
-        "Human",
-        "Alien",
-        "Humanoid",
-        "Poopybutthole",
-        "Mythological",
-        "Unknown",
-        "Animal",
-        "Disease",
-        "Robot",
-        "Cronenberg",
-      ],
-    },
-    { title: "Gender", buttons: ["female", "male", "genderless", "unknown"] },
-  ];
-
   const handleFilter = (event) => {
     setFilter(event.target.value.toLowerCase());
     // reset currentPage to 1
@@ -76,45 +54,47 @@ const Characters = () => {
   return (
     <>
       <Head title="Rick and Morty | Characters" />
-      <div className={styles.main}>
-        <section>
-          <Hero>
-            <h1>Characters</h1>
-            <div className={styles.heroSub}>
-              <SearchInput
-                value={inputValue}
-                onInputChange={handleInputChange}
-              />
-              <Button primary onClick={() => setSearchTerm(inputValue)}>
-                Search
-              </Button>
-            </div>
-          </Hero>
-        </section>
-        <aside>
-          <h3 className={styles.filterBy}>Filter By</h3>
-          <Accordion items={filterItems} onFilter={handleFilter} />
-        </aside>
-        <div className={styles.content}>
-          {wiki.characters ? (
-            <WikiList results={wiki.characters} />
-          ) : (
-            <p>loading</p>
-          )}
-        </div>
-        <footer>
-          {currPage && (
-            <Pagination
-              currentPage={currentPage}
-              lastPage={lastPage}
-              onPageNext={handlePageNext}
-              onPagePrevious={handlePagePrev}
-              nextBtnState={btnNext}
-              prevBtnState={btnPrevious}
+
+      <Hero title={"A simple Rick and Morty Wiki"} />
+      {!wiki.characters && <p>loaiding</p>}
+
+      <MainContent>
+        <Sidebar>
+          <h3>Filter By</h3>
+          <Accordion onFilter={handleFilter} />
+        </Sidebar>
+        {!wiki.characters && (
+          <div className="loading">
+            <SvgSpinner />
+          </div>
+        )}
+
+        <WikiList>
+          {wiki.characters?.map(({ name, id, status, location, image }) => (
+            <WikiDetails
+              key={id}
+              name={name}
+              id={id}
+              status={status}
+              location={location}
+              image={image}
             />
-          )}
-        </footer>
-      </div>
+          ))}
+        </WikiList>
+      </MainContent>
+
+      <footer>
+        {currPage && (
+          <Pagination
+            currentPage={currentPage}
+            lastPage={lastPage}
+            onPageNext={handlePageNext}
+            onPagePrevious={handlePagePrev}
+            nextBtnState={btnNext}
+            prevBtnState={btnPrevious}
+          />
+        )}
+      </footer>
     </>
   );
 };

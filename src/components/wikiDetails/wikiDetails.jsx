@@ -3,21 +3,6 @@ import Card from "elements/card/card";
 import { Link } from "react-router-dom";
 import styles from "./wikiDetails.module.css";
 
-const WikiList = ({ results }) => {
-  return results.map((result) => (
-    <WikiDetails
-      key={result.id}
-      id={result.id}
-      name={result.name}
-      status={result.status.toLowerCase()}
-      location={result.location.name}
-      image={result.image}
-    />
-  ));
-};
-
-export default WikiList;
-
 const WikiDetails = ({ name, id, status, location, image }) => {
   return (
     <div className={styles.wikiDetails}>
@@ -29,9 +14,11 @@ const WikiDetails = ({ name, id, status, location, image }) => {
           <img src={image} alt="image" />
           <div className={styles.wikiName}>{name}</div>
           <h3> Last Location </h3>
-          <p>{location}</p>
+          <p>{location.name}</p>
         </Card>
       </Link>
     </div>
   );
 };
+
+export default WikiDetails;
